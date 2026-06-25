@@ -1,0 +1,250 @@
+@if (authService.isAuthenticated()) {
+    
+    <div class="max-w-7xl w-full mx-auto p-6 grid grid-cols-1 md:grid-cols-[380px_1fr] gap-8 text-black dark:text-white items-start">
+        
+        <div class="w-full md:sticky md:top-6 flex flex-col gap-6">
+            <!--Створити таску-->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 w-full">
+                <h2 class="text-xl font-semibold mb-4">Створити нове завдання</h2>
+                
+                <form (ngSubmit)="onCreateTask()" class="flex flex-col gap-3">
+                    <input 
+                        class="p-3 border border-gray-300 dark:border-gray-600 rounded-2xl bg-transparent focus:outline-none focus:ring-2 focus:ring-green-500" 
+                        type="text" 
+                        placeholder="Що потрібно зробити?..." 
+                        [(ngModel)]="newDescription" 
+                        name="description" 
+                        required 
+                    />
+
+                    <input 
+                        class="p-3 border border-gray-300 dark:border-gray-600 rounded-2xl bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" 
+                        type="text" 
+                        placeholder="Назва категорії (наприклад: Робота, Особисте)..." 
+                        [(ngModel)]="newCategoryName" 
+                        name="categoryName" 
+                    />
+                    
+                    @if (error()) { <p class="text-red-500 text-sm font-medium">{{ error() }}</p> }
+
+                    <button type="submit" [disabled]="isLoading()" class="mt-2 bg-green-600 text-white py-3 px-4 rounded-2xl font-medium hover:bg-green-700 disabled:bg-gray-400 transition-colors">
+                        @if (isLoading()) { Створення... } @else { Додати завдання }
+                    </button>
+                </form>
+            </div>
+            <!--Фільтр категорій-->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 w-full">
+                <h3 class="text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">
+                    Фільтр категорій (клік для ввімкнення/вимкнення)
+                </h3>
+                
+                <div class="flex flex-wrap gap-2">
+                    <button 
+                        type="button"
+                        (click)="toggleNoCategoryFilter()"
+                        [class]="isNoCategoryEnabled() 
+                        ? 'bg-gray-600 text-white border-transparent' 
+                        : 'bg-gray-100 text-gray-400 dark:bg-gray-700 dark:text-gray-500 border-gray-200 dark:border-gray-600'"
+                        class="px-3 py-1.5 rounded-xl text-xs font-medium border transition-all hover:scale-[1.03]"
+                    >
+                        📁 Без категорії {{ isNoCategoryEnabled() ? '•' : '' }}
+                    </button>
+
+                    @for (category of taskService.categories(); track category.id) {
+                        <button 
+                            type="button"
+                            (click)="toggleCategoryFilter(category.id)"
+                            [class]="isCategorySelected(category.id) 
+                                ? 'bg-blue-600 text-white border-transparent shadow-sm shadow-blue-500/20' 
+                                : 'bg-gray-100 text-gray-400 dark:bg-gray-700 dark:text-gray-500 border-gray-200 dark:border-gray-600'"
+                            class="px-3 py-1.5 rounded-xl text-xs font-medium border transition-all hover:scale-[1.03]"
+                        >
+                            # {{ category.name }} {{ isCategorySelected(category.id) ? '•' : '' }}
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-3 w-full">
+            <!--Пошук та сортування-->
+            <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl border border-gray-100 dark:border-gray-700/60 mb-4 flex flex-col gap-4">
+                
+                <div class="flex gap-2">
+                    <input 
+                        type="text" 
+                        placeholder="Пошук за описом або категорією..." 
+                        [(ngModel)]="searchInput"
+                        (keydown.enter)="applySearch()"
+                        class="flex-1 p-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    />
+                    <button 
+                        (click)="applySearch()"
+                        class="bg-green-600 text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-green-700 transition-colors"
+                    >
+                        Знайти
+                    </button>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex bg-gray-200 dark:bg-gray-700 p-1 rounded-xl text-sm font-medium">
+                        <button 
+                            (click)="setStatusFilter(null)"
+                            [class]="statusFilter() === null ? 'bg-white dark:bg-gray-800 shadow-sm text-gray-900 dark:text-white' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'"
+                            class="px-4 py-1.5 rounded-lg transition-all"
+                        >Всі</button>
+                        <button 
+                            (click)="setStatusFilter(false)"
+                            [class]="statusFilter() === false ? 'bg-white dark:bg-gray-800 shadow-sm text-gray-900 dark:text-white' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'"
+                            class="px-4 py-1.5 rounded-lg transition-all"
+                        >Активні</button>
+                        <button 
+                            (click)="setStatusFilter(true)"
+                            [class]="statusFilter() === true ? 'bg-white dark:bg-gray-800 shadow-sm text-gray-900 dark:text-white' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'"
+                            class="px-4 py-1.5 rounded-lg transition-all"
+                        >Виконані</button>
+                    </div>
+
+                    <button 
+                        (click)="toggleSort()"
+                        class="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-green-600 transition-colors"
+                    >
+                        <span class="text-lg">⇅</span> 
+                        {{ sortAscending() ? 'Старі спочатку' : 'Нові спочатку' }}
+                    </button>
+                </div>
+            </div>
+            
+            <h3 class="text-lg font-semibold text-gray-500 dark:text-gray-400 pl-1">
+                Мої завдання ({{ taskService.totalCount() }})
+            </h3>
+            <!--Якщо завдань нема, то пишемо завдань нема, а якщо є (else) - відображаєм завдання-->
+            @if (taskService.tasks().length === 0) {
+                <div class="text-center py-12 text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-800/50 rounded-3xl border border-dashed border-gray-200 dark:border-gray-700">
+                    Завдань не знайдено.
+                </div>
+            } @else {
+                @for (task of taskService.tasks(); track task.id) {
+    
+                    @if (editingTaskId() === task.id) {
+                        <div class="bg-blue-50/50 dark:bg-blue-900/10 p-4 rounded-2xl shadow-sm border border-blue-200 dark:border-blue-800 flex flex-col gap-3 transition-all w-full">
+                            <input 
+                                type="text" 
+                                [(ngModel)]="editDescription" 
+                                class="w-full p-2.5 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                placeholder="Опис завдання..."
+                            />
+                            <input 
+                                type="text" 
+                                [(ngModel)]="editCategoryName" 
+                                class="w-full p-2.5 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                placeholder="Категорія (наприклад: Робота)..."
+                            />
+                            <div class="flex gap-2 justify-end mt-1">
+                                <button 
+                                    (click)="cancelEdit()" 
+                                    class="px-4 py-2 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-xl transition-colors"
+                                >
+                                    Скасувати
+                                </button>
+                                <button 
+                                    (click)="saveEdit(task.id)" 
+                                    [disabled]="isLoading()"
+                                    class="px-4 py-2 text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-400 rounded-xl transition-colors shadow-sm shadow-blue-500/30"
+                                >
+                                    Зберегти
+                                </button>
+                            </div>
+                        </div>
+                    } 
+                    @else {
+                        <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex justify-between items-center transition-all hover:border-gray-200 hover:scale-[1.01] w-full">
+                            
+                            <div class="flex items-center gap-4 flex-1">
+                                <input 
+                                    type="checkbox" 
+                                    [checked]="task.isCompleted" 
+                                    (change)="onToggleStatus(task.id, task.isCompleted)"
+                                    class="w-5 h-5 rounded-md border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer flex-shrink-0"
+                                />
+
+                                <div class="flex flex-col">
+                                    <span class="font-medium text-lg break-all" [class.line-through]="task.isCompleted" [class.text-gray-400]="task.isCompleted">
+                                        {{ task.description }}
+                                    </span>
+                                    @if (task.categoryName && task.categoryName !== 'Без категорії') {
+                                        <span class="text-xs bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400 font-semibold mt-1 px-2 py-0.5 rounded-md w-max">
+                                            # {{ task.categoryName }}
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-1 ml-2">
+                                <button 
+                                    (click)="startEdit(task)" 
+                                    class="text-gray-400 hover:text-blue-500 p-2 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors"
+                                    title="Редагувати завдання"
+                                >
+                                    ✎
+                                </button>
+                                <button 
+                                    (click)="onDeleteTask(task.id)" 
+                                    class="text-gray-400 hover:text-red-500 p-2 rounded-xl hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+                                    title="Видалити завдання"
+                                >
+                                    ✕
+                                </button>
+                            </div>
+                        </div>
+                    }
+                }
+
+                <div class="flex items-center justify-between mt-4 p-2 bg-gray-50 dark:bg-gray-800/40 rounded-2xl border border-gray-100 dark:border-gray-700/60 text-sm">
+                    <button 
+                        (click)="prevPage()" 
+                        [disabled]="currentPage() === 1"
+                        class="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-40 disabled:hover:bg-transparent font-medium transition-colors"
+                    >
+                        ← Назад
+                    </button>
+
+                    <span class="text-gray-500 dark:text-gray-400 font-medium">
+                        Сторінка {{ currentPage() }} з {{ totalPages() }}
+                    </span>
+
+                    <button 
+                        (click)="nextPage()" 
+                        [disabled]="!hasMoreTasks()"
+                        class="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-40 disabled:hover:bg-transparent font-medium transition-colors"
+                    >
+                        Вперед →
+                    </button>
+                </div>
+            }
+        </div>
+
+    </div>
+
+}
+<!--Якщо користувач не залогінений, то просимо увійти в акаунт або створити його-->
+@else {
+    
+    <div class="max-w-md w-full mx-auto my-12 p-8 bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 text-center text-black dark:text-white">
+        <div class="text-5xl mb-4">🔒</div>
+        <h2 class="text-2xl font-bold mb-2">Доступ обмежено</h2>
+        <p class="text-gray-500 dark:text-gray-400 mb-6 text-sm">
+        Щоб переглядати, створювати та керувати своїми завданнями, вам необхідно увійти у свій особистий кабінет.
+        </p>
+        
+        <div class="flex flex-col gap-3">
+        <a routerLink="/login" class="bg-green-600 text-white py-3 px-4 rounded-2xl font-medium hover:bg-green-700 transition-colors block">
+            Увійти в акаунт
+        </a>
+        <a routerLink="/register" class="text-blue-500 hover:text-blue-600 font-medium text-sm hover:underline py-2">
+            Немає акаунту? Зареєструватися
+        </a>
+        </div>
+    </div>
+
+}

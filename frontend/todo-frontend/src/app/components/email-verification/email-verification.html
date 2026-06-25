@@ -1,0 +1,26 @@
+<form (ngSubmit)="onSubmit()" class="flex flex-col gap-3">
+    <button type="button" (click)="onGoBack()" class="text-sm text-gray-500 hover:text-gray-700 hover:underline mt-2 block text-center w-full">
+    ← Змінити пошту або пароль
+    </button>
+
+    <p class="text-sm text-center mb-2">
+        Введіть 6-значний код, який ми відправили на <b>{{ email }}</b>
+    </p>
+    
+    <input 
+        class="p-2 border border-gray-300 rounded-2xl text-center text-xl tracking-widest font-mono" 
+        type="text" 
+        maxlength="6"
+        placeholder="000000" 
+        [(ngModel)]="verificationCode" 
+        name="verificationCode"
+        required 
+    />
+    
+    <button type="submit" class="mt-2 bg-blue-500 text-white py-2 px-4 rounded-2xl hover:bg-blue-600">
+        Підтвердити код
+    </button>
+
+    @if (error) { <p class="text-red-500 text-sm text-center mt-1">{{ error }}</p> }
+    @if (message) { <p class="text-green-500 text-sm text-center mt-1">{{ message }}</p> }
+</form>
