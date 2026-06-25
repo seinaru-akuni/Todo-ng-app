@@ -1,0 +1,123 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\akuni\\PetProjects\\todo-list-angular\\backend\\ToDoWebAPI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{53382637-05AD-F173-F5E5-14E7B22A4FC1}|ToDoWebAPI\\ToDoWebAPI.csproj|c:\\akuni\\petprojects\\todo-list-angular\\backend\\todowebapi\\todowebapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53382637-05AD-F173-F5E5-14E7B22A4FC1}|ToDoWebAPI\\ToDoWebAPI.csproj|solutionrelative:todowebapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53382637-05AD-F173-F5E5-14E7B22A4FC1}|ToDoWebAPI\\ToDoWebAPI.csproj|c:\\akuni\\petprojects\\todo-list-angular\\backend\\todowebapi\\todowebapi\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53382637-05AD-F173-F5E5-14E7B22A4FC1}|ToDoWebAPI\\ToDoWebAPI.csproj|solutionrelative:todowebapi\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53382637-05AD-F173-F5E5-14E7B22A4FC1}|ToDoWebAPI\\ToDoWebAPI.csproj|c:\\akuni\\petprojects\\todo-list-angular\\backend\\todowebapi\\todowebapi\\services\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53382637-05AD-F173-F5E5-14E7B22A4FC1}|ToDoWebAPI\\ToDoWebAPI.csproj|solutionrelative:todowebapi\\services\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53382637-05AD-F173-F5E5-14E7B22A4FC1}|ToDoWebAPI\\ToDoWebAPI.csproj|c:\\akuni\\petprojects\\todo-list-angular\\backend\\todowebapi\\todowebapi\\services\\itaskservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53382637-05AD-F173-F5E5-14E7B22A4FC1}|ToDoWebAPI\\ToDoWebAPI.csproj|solutionrelative:todowebapi\\services\\itaskservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53382637-05AD-F173-F5E5-14E7B22A4FC1}|ToDoWebAPI\\ToDoWebAPI.csproj|c:\\akuni\\petprojects\\todo-list-angular\\backend\\todowebapi\\todowebapi\\services\\ijwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53382637-05AD-F173-F5E5-14E7B22A4FC1}|ToDoWebAPI\\ToDoWebAPI.csproj|solutionrelative:todowebapi\\services\\ijwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53382637-05AD-F173-F5E5-14E7B22A4FC1}|ToDoWebAPI\\ToDoWebAPI.csproj|c:\\akuni\\petprojects\\todo-list-angular\\backend\\todowebapi\\todowebapi\\services\\categoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53382637-05AD-F173-F5E5-14E7B22A4FC1}|ToDoWebAPI\\ToDoWebAPI.csproj|solutionrelative:todowebapi\\services\\categoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\akuni\\PetProjects\\todo-list-angular\\backend\\ToDoWebAPI\\ToDoWebAPI\\Program.cs",
+              "RelativeDocumentMoniker": "ToDoWebAPI\\Program.cs",
+              "ToolTip": "C:\\akuni\\PetProjects\\todo-list-angular\\backend\\ToDoWebAPI\\ToDoWebAPI\\Program.cs",
+              "RelativeToolTip": "ToDoWebAPI\\Program.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAABAAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-21T10:06:44.266Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "C:\\akuni\\PetProjects\\todo-list-angular\\backend\\ToDoWebAPI\\ToDoWebAPI\\Services\\IUserService.cs",
+              "RelativeDocumentMoniker": "ToDoWebAPI\\Services\\IUserService.cs",
+              "ToolTip": "C:\\akuni\\PetProjects\\todo-list-angular\\backend\\ToDoWebAPI\\ToDoWebAPI\\Services\\IUserService.cs",
+              "RelativeToolTip": "ToDoWebAPI\\Services\\IUserService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAkAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-21T11:37:09.167Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IJwtService.cs",
+              "DocumentMoniker": "C:\\akuni\\PetProjects\\todo-list-angular\\backend\\ToDoWebAPI\\ToDoWebAPI\\Services\\IJwtService.cs",
+              "RelativeDocumentMoniker": "ToDoWebAPI\\Services\\IJwtService.cs",
+              "ToolTip": "C:\\akuni\\PetProjects\\todo-list-angular\\backend\\ToDoWebAPI\\ToDoWebAPI\\Services\\IJwtService.cs",
+              "RelativeToolTip": "ToDoWebAPI\\Services\\IJwtService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-21T11:36:56.988Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ITaskService.cs",
+              "DocumentMoniker": "C:\\akuni\\PetProjects\\todo-list-angular\\backend\\ToDoWebAPI\\ToDoWebAPI\\Services\\ITaskService.cs",
+              "RelativeDocumentMoniker": "ToDoWebAPI\\Services\\ITaskService.cs",
+              "ToolTip": "C:\\akuni\\PetProjects\\todo-list-angular\\backend\\ToDoWebAPI\\ToDoWebAPI\\Services\\ITaskService.cs",
+              "RelativeToolTip": "ToDoWebAPI\\Services\\ITaskService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-21T09:14:34.177Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CategoryService.cs",
+              "DocumentMoniker": "C:\\akuni\\PetProjects\\todo-list-angular\\backend\\ToDoWebAPI\\ToDoWebAPI\\Services\\CategoryService.cs",
+              "RelativeDocumentMoniker": "ToDoWebAPI\\Services\\CategoryService.cs",
+              "ToolTip": "C:\\akuni\\PetProjects\\todo-list-angular\\backend\\ToDoWebAPI\\ToDoWebAPI\\Services\\CategoryService.cs",
+              "RelativeToolTip": "ToDoWebAPI\\Services\\CategoryService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-25T15:59:11.03Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\akuni\\PetProjects\\todo-list-angular\\backend\\ToDoWebAPI\\ToDoWebAPI\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "ToDoWebAPI\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\akuni\\PetProjects\\todo-list-angular\\backend\\ToDoWebAPI\\ToDoWebAPI\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "ToDoWebAPI\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-21T09:50:00.913Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
