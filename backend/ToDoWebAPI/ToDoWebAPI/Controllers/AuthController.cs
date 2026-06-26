@@ -93,7 +93,7 @@ namespace ToDoWebAPI.Controllers
             // Шукаємо користувача за Email
             var user = await _userService.FindUserViaEmailAsync(request.Email);
 
-            if (user == null || string.IsNullOrEmpty(user.PasswordHash))
+            if (user == null || string.IsNullOrEmpty(user.PasswordHash) || !user.IsEmailVerified)
                 return Unauthorized("Невірний Email або пароль.");
 
             // Перевіряємо хеш пароля
