@@ -45,7 +45,7 @@ export class RegisterComponent {
         this.message.set('Код відправлено на вашу пошту!');
       },
       error: (err) => {
-        this.error = err.error?.message || err.message || 'Помилка реєстрації';
+        this.error.set(err.error?.message || 'Сталася помилка при реєстрації.');
       }
     });
   }

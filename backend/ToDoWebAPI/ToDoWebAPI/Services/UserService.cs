@@ -41,17 +41,24 @@ namespace ToDoWebAPI.Services
 
         public async Task<UserEntity?> FindUserViaEmailAsync(string email)
         {
-            return _context.Users.FirstOrDefault(u => u.Email == email);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<UserEntity?> FindUserViaIdAsync(int id)
         {
-            return _context.Users.FirstOrDefault(u => u.Id == id);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
-        
-        public async Task<bool> IsEmailVerifiedAsync(string email)
+
+        public async Task<bool> IsUserVerifiedAsync(string identifier)
         {
-            return _context.Users.FirstOrDefault(u => u.Email == email).IsEmailVerified;
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == identifier || u.Username == identifier);
+
+            if (user == null)
+            {
+                return false; 
+            }
+            return user.IsEmailVerified;
         }
     }
 }

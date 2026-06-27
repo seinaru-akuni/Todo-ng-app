@@ -20,12 +20,12 @@
     } @else {
         <app-email-verification 
         [email]="email" 
-        navigateTo="/"
+        navigateTo="/"  
         (cancel)="resetFields()"></app-email-verification>
     }
     
     <a routerLink="/login" class="text-blue-500 hover:underline block mt-4">
-        Вже маєте акаунт? Увійдіть тут
+        Вже маєте акаунт? Увійдіть тут  
     </a>
 
     @if (error()) { <p class="text-red-500 mt-2">{{ error() }}</p> }

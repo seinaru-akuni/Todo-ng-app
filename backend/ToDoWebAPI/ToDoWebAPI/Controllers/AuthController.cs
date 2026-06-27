@@ -20,7 +20,6 @@ namespace ToDoWebAPI.Controllers
         private readonly IJwtService _jwtService;
         private readonly IUserService _userService;
 
-        // Створюємо екземпляр хешера паролів
         private readonly PasswordHasher<UserEntity> _passwordHasher = new();
 
         public AuthController(IJwtService jwtService, IUserService userService)
@@ -37,17 +36,20 @@ namespace ToDoWebAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto request)
         {
-            if (request.Password != request.ConfirmPassword)
-                return BadRequest("Паролі не співпадають.");
+            if (request.Password.Length == 0 || request.ConfirmPassword.Length == 0 || request.Username.Length == 0 || request.Email.Length == 0)
+                return BadRequest(new { message = "Не всі поля заповнені" });
 
-            if (await _userService.IsEmailTakenAsync(request.Email) && await _userService.IsEmailVerifiedAsync(request.Email))
-                return BadRequest("Користувач з таким Email вже існує.");
+            if (request.Password != request.ConfirmPassword)
+                return BadRequest(new { message = "Паролі не співпадають" });
+
+            if (await _userService.IsEmailTakenAsync(request.Email) && await _userService.IsUserVerifiedAsync(request.Email))
+                return BadRequest(new { message = "Користувач з такою поштою вже існує" });
            
-            if (await _userService.IsUsernameTakenAsync(request.Username) && await _userService.IsEmailVerifiedAsync(request.Email))
-                return BadRequest("Цей Username вже зайнятий.");
+            if (await _userService.IsUsernameTakenAsync(request.Username) && await _userService.IsUserVerifiedAsync(request.Username))
+                return BadRequest(new { message = "Це ім'я користувача вже зайняте" });
 
             string verificationCode = Random.Shared.Next(0, 1000000).ToString("D6");
-            if (await _userService.IsEmailTakenAsync(request.Email) && !await _userService.IsEmailVerifiedAsync(request.Email))
+            if (await _userService.IsEmailTakenAsync(request.Email) && !await _userService.IsUserVerifiedAsync(request.Email))
             {
                
                 UserEntity user = await _userService.FindUserViaEmailAsync(request.Email);
@@ -94,13 +96,13 @@ namespace ToDoWebAPI.Controllers
             var user = await _userService.FindUserViaEmailAsync(request.Email);
 
             if (user == null || string.IsNullOrEmpty(user.PasswordHash) || !user.IsEmailVerified)
-                return Unauthorized("Невірний Email або пароль.");
+                return Unauthorized(new { message = "Не вірна пошта або пароль" });
 
             // Перевіряємо хеш пароля
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
 
             if (result == PasswordVerificationResult.Failed)
-                return Unauthorized("Невірний Email або пароль.");
+                return Unauthorized(new { message = "Не вірна пошта або пароль" });
 
             // Якщо пароль підходить, видаємо безпечну куку
             _jwtService.GenerateAndSetTokenCookie(user.Id, HttpContext, request.RememberMe);
@@ -120,20 +122,20 @@ namespace ToDoWebAPI.Controllers
             var user = await _userService.FindUserViaEmailAsync(request.Email);
 
             if (user == null)
-                return NotFound("Користувача не знайдено.");
+                return NotFound(new { message = "Користувача не знайдено" });
 
             // Загальна перевірка коду для обох випадків
             if (user.VerificationCode != request.Code)
-                return BadRequest("Невірний код.");
+                return BadRequest(new { message = "Не вірний код" });
 
             if (user.VerificationCodeExpiry < DateTime.UtcNow)
-                return BadRequest("Термін дії коду минув.");
+                return BadRequest(new { message = "Термін дії коду минув" });
 
             // Перевіряємо, чи це скидання пароля 
             if (!string.IsNullOrEmpty(request.NewPassword))
             {
                 if (request.NewPassword != request.ConfirmNewPassword)
-                    return BadRequest("Паролі не співпадають.");
+                    return BadRequest(new { message = "Паролі не співпадають" });
 
                 // Хешуємо та оновлюємо пароль на новий
                 user.PasswordHash = _passwordHasher.HashPassword(user, request.NewPassword);

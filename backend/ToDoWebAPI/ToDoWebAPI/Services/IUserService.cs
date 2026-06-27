@@ -7,7 +7,7 @@ namespace ToDoWebAPI.Services
     public interface IUserService
     {
         public Task<bool> IsEmailTakenAsync(string email);
-        public Task<bool> IsEmailVerifiedAsync(string email);
+        public Task<bool> IsUserVerifiedAsync(string email);
         public Task<bool> IsUsernameTakenAsync(string username);
         public Task<int> ContextSaveChangesAsync();
         public void AddNewAppUser(UserEntity newUser);
